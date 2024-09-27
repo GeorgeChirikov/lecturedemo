@@ -1,12 +1,21 @@
-# Description: Dockerfile for building the application
 
+# Use an official Maven image as a parent image
 FROM maven:latest
 
-# Set the working directory in the container to /app directory
+# Set metadata information
+LABEL authors="george"
+
+# Set the working directory in the container
 WORKDIR /app
 
-# Copy the pom.xml file to the container at /app directory
+# Copy the pom.xml file to the container
+COPY pom.xml /app/
+
+# Copy the entire project to the container
 COPY . /app/
 
-# Build the application using maven package command
+# Package your application
 RUN mvn package
+
+# Run the main class (assuming your application has a main class)
+CMD ["java", "-jar", "target/calculator.jar"]
